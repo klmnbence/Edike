@@ -1,0 +1,1610 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Valentin nap 💖</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg1:#ff758c;
+  --bg2:#ff7eb3;
+
+  --card:#ffffff;
+  --accent:#ff4d6d;
+  --accent2:#e63946;
+  --soft:#ffe5ec;
+  --shadow:0 20px 45px rgba(0,0,0,.18);
+  --radius:26px;
+
+  --heart:#ffffff;
+
+  --paper1:#ffffff;
+  --paper2:#fbfbfd;
+
+  --stamp:#1f9d6a;
+  --stampBorder: rgba(31,157,106,.55);
+  --stampBg: rgba(31,157,106,.08);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  overflow:hidden;
+  background:linear-gradient(135deg,var(--bg1),var(--bg2));
+  font-family:Montserrat,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  color:#1f2937;
+}
+
+/* 1) PULSE háttér */
+@keyframes bgPulse {
+  0%   { filter: brightness(1); }
+  50%  { filter: brightness(1.06); }
+  100% { filter: brightness(1); }
+}
+body.pulse { animation: bgPulse 3.2s ease-in-out infinite; }
+
+/* 2) Love mode (hue rotate) */
+body.loveMode {
+  filter: hue-rotate(12deg) saturate(1.05);
+  transition: filter .35s ease;
+}
+
+/* HEARTS */
+.hearts{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.heart{
+  position:absolute; --s:14px;
+  width:var(--s); height:var(--s);
+  background:var(--heart);
+  transform:rotate(45deg);
+  animation:floatUp linear infinite;
+  opacity:1;
+}
+.heart::before,.heart::after{
+  content:""; position:absolute;
+  width:var(--s); height:var(--s);
+  background:var(--heart);
+  border-radius:50%;
+  opacity:1;
+}
+.heart::before{top:calc(var(--s) * -0.5);left:0}
+.heart::after{left:calc(var(--s) * -0.5);top:0}
+@keyframes floatUp{
+  from{transform:translateY(105vh) rotate(45deg);opacity:0}
+  6%{opacity:1} 85%{opacity:1}
+  to{transform:translateY(-10vh) rotate(45deg);opacity:0}
+}
+
+/* 3) Kurzor-szívek */
+.cursor-heart{
+  position:fixed;
+  width:10px;height:10px;
+  background:#fff;
+  transform:rotate(45deg);
+  pointer-events:none;
+  opacity:.75;
+  z-index:9997;
+  filter:drop-shadow(0 6px 10px rgba(0,0,0,.12));
+  animation: cursorPop .6s ease forwards;
+}
+.cursor-heart::before,.cursor-heart::after{
+  content:"";
+  position:absolute;
+  width:10px;height:10px;
+  background:#fff;
+  border-radius:50%;
+}
+.cursor-heart::before{top:-5px}
+.cursor-heart::after{left:-5px}
+@keyframes cursorPop{
+  to { transform: translateY(-14px) rotate(45deg); opacity:0; }
+}
+
+/* STAGE + CARD */
+.stage{position:relative;z-index:1;height:100%;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{
+  position:relative;
+  width:min(500px,92vw);
+  background:var(--card);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:26px;
+  text-align:center;
+  overflow:hidden;
+
+  /* 4) Parallax tilt (a JS állítja) */
+  transform-style:preserve-3d;
+  will-change: transform;
+  transition: transform .16s ease;
+}
+
+/* 5) Shine effekt slide-in-nél */
+.card::after{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background:linear-gradient(
+    120deg,
+    transparent 45%,
+    rgba(255,255,255,.35) 50%,
+    transparent 55%
+  );
+  transform:translateX(-120%);
+  pointer-events:none;
+}
+.card.anim-in::after{ animation: shine .7s ease; }
+@keyframes shine{ to{ transform:translateX(120%); } }
+
+/* 6) Heartbeat (rövid) */
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.03); }
+  50% { transform: scale(1); }
+}
+.card.heartbeat { animation: heartbeat .45s ease; }
+
+.card.anim-in{animation:slideIn .45s ease both}
+.card.anim-out{animation:slideOut .42s ease both}
+@keyframes slideIn{from{transform:translateX(120%);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes slideOut{from{transform:translateX(0);opacity:1}to{transform:translateX(-120%);opacity:0}}
+
+h1{font-family:"Playfair Display",serif;color:var(--accent2);margin:0 0 14px;font-size:28px}
+p{margin:0 0 14px;font-size:15px;opacity:.9}
+
+.row{display:flex;gap:12px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+
+.btn{
+  border:0;border-radius:999px;
+  padding:12px 18px;font-weight:800;
+  cursor:pointer;box-shadow:0 10px 18px rgba(0,0,0,.1);
+  font-family:Montserrat,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-soft{background:#e9ecef;color:#111827}
+.btn-wide{width:100%}
+
+/* options grid */
+.options{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}
+.opt{
+  border:0;border-radius:22px;
+  padding:10px;background:var(--soft);
+  cursor:pointer;font-weight:800;
+  min-height:168px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+  transform: translateZ(0);
+}
+.opt .thumb{width:100%;height:112px;border-radius:16px;margin-bottom:8px;overflow:hidden;background:#f8fafc}
+.opt .thumb img, .opt .thumb video{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
+
+.field{
+  width:100%;
+  padding:12px 14px;
+  border-radius:16px;
+  border:1px solid rgba(0,0,0,.15);
+  font:700 14px Montserrat,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  outline:none;
+}
+.field:focus{border-color:rgba(255,77,109,.6);box-shadow:0 0 0 4px rgba(255,77,109,.18)}
+
+/* POLAROID */
+.polaroid{
+  width:100%;
+  background:#fff;
+  border-radius:18px;
+  padding:12px;
+  box-shadow:0 16px 32px rgba(0,0,0,.18);
+  border:1px solid rgba(0,0,0,.06);
+  margin:10px 0;
+  transform-origin: 50% 50%;
+}
+.polaroidInner{
+  border-radius:14px;
+  overflow:hidden;
+  background:#f8fafc;
+  position:relative;
+}
+.polaroidInner .mediaHost{
+  width:100%;
+  display:block;
+  opacity:0;
+  transform:translateY(2px);
+  animation:fadeIn .22s ease forwards;
+}
+@keyframes fadeIn{to{opacity:1;transform:translateY(0)}}
+.polaroidInner video.mediaHost{width:100%;height:auto;display:block}
+.polaroidInner img.mediaHost{width:100%;height:auto;display:block}
+
+/* Simple slider */
+.sliderBox{
+  text-align:left;
+  background:#fff;
+  border-radius:18px;
+  padding:14px;
+  border:1px solid rgba(0,0,0,.08);
+}
+.sliderTop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:10px;
+}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(255,77,109,.10);
+  color:#b00020;
+  font-weight:900;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+}
+.small{opacity:.75;font-size:12px}
+.range{width:100%;accent-color: var(--accent);}
+
+/* Confetti */
+.confetti{
+  position:fixed;top:-10px;width:10px;height:14px;opacity:.95;
+  z-index:9998;pointer-events:none;animation:fall linear forwards;
+}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:1}}
+
+/* 7) Rózsaszirom */
+.petal{
+  position:fixed;
+  width:12px;height:12px;
+  background: rgba(255,255,255,.9);
+  border-radius: 100% 0;
+  opacity:.72;
+  z-index:9996;
+  filter: drop-shadow(0 10px 16px rgba(0,0,0,.14));
+  transform: rotate(20deg);
+  animation: petalFall 4s linear forwards;
+}
+@keyframes petalFall{
+  0%   { transform: translateY(-10vh) rotate(0deg); }
+  100% { transform: translateY(115vh) rotate(540deg); }
+}
+
+/* NO */
+#noBtn{position:fixed;z-index:9999;display:none}
+
+/* Modal */
+.modal{
+  position:absolute; inset:0;
+  background:rgba(0,0,0,.25);
+  display:flex; align-items:center; justify-content:center;
+  padding:18px;
+}
+.modalCard{
+  width:100%;
+  background:#fff;
+  border-radius:20px;
+  padding:16px;
+  box-shadow:0 18px 35px rgba(0,0,0,.22);
+  text-align:left;
+}
+.modalTitle{font-weight:900;margin:0 0 6px}
+.modalText{margin:0 0 12px;opacity:.85;font-size:14px}
+.modalRow{display:flex;gap:10px}
+.modalRow .btn{flex:1}
+
+/* Receipt */
+.receipt{
+  text-align:left;
+  background:#fff;
+  border-radius:18px;
+  padding:16px;
+  border:1px dashed rgba(0,0,0,.22);
+  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+}
+.receipt h2{
+  margin:0 0 10px;
+  font-size:16px;
+  letter-spacing:1.6px;
+  text-transform:uppercase;
+}
+.hr{border-top:1px dashed rgba(0,0,0,.30);margin:10px 0}
+.rline{display:flex;justify-content:space-between;gap:10px;margin:6px 0}
+.smallReceipt{opacity:.75;font-size:12px}
+
+/* Stamp */
+.stamp{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border:2px solid var(--stampBorder);
+  color:var(--stamp);
+  background:var(--stampBg);
+  border-radius:12px;
+  font-weight:900;
+  letter-spacing:1px;
+  transform:rotate(-6deg);
+  margin-top:12px;
+  text-transform:uppercase;
+  box-shadow:0 10px 18px rgba(31,157,106,.12);
+
+  /* 8) pecsét anim */
+  animation: stampIn .35s ease;
+}
+@keyframes stampIn{
+  0%{transform:scale(2) rotate(-12deg);opacity:0}
+  100%{transform:scale(1) rotate(-6deg);opacity:1}
+}
+.stampDot{
+  width:10px;height:10px;border-radius:50%;
+  background:var(--stamp);
+  box-shadow:0 0 0 4px rgba(31,157,106,.12);
+}
+
+/* Paper texture */
+.paper{
+  background:
+    radial-gradient(900px 600px at 30% 20%, rgba(0,0,0,.03), transparent 60%),
+    radial-gradient(700px 500px at 80% 70%, rgba(0,0,0,.02), transparent 62%),
+    repeating-linear-gradient(0deg, rgba(0,0,0,.010), rgba(0,0,0,.010) 1px, transparent 1px, transparent 10px),
+    linear-gradient(180deg, var(--paper1), var(--paper2));
+}
+
+/* CLEAN ENVELOPE */
+.envWrap{display:flex;flex-direction:column;align-items:center;gap:12px}
+.confidential{
+  display:inline-flex;
+  padding:6px 10px;
+  border:2px solid rgba(0,0,0,.30);
+  border-radius:10px;
+  font-weight:900;
+  letter-spacing:1.2px;
+  opacity:.9;
+  transform:rotate(-6deg);
+  background:rgba(255,255,255,.55);
+}
+.tapHint{opacity:.8;font-size:13px}
+
+.envelopeStage{
+  width:min(360px,80vw);
+  height:240px;
+  position:relative;
+  cursor:pointer;
+}
+
+/* 9) boríték mélyebb “papír” árnyék */
+.envPocket{
+  position:absolute; left:0; right:0; bottom:0;
+  height:160px;
+  border-radius:20px;
+  border:1px solid rgba(0,0,0,.06);
+  box-shadow:
+    0 18px 35px rgba(0,0,0,.16),
+    inset 0 1px 0 rgba(255,255,255,.55);
+  overflow:hidden;
+}
+.envPocket::before{
+  content:"";
+  position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(255,77,109,.10), rgba(255,77,109,.03));
+  clip-path:polygon(0 0,50% 54%,100% 0,100% 100%,0 100%);
+}
+.letterCard{
+  position:absolute; left:18px; right:18px; bottom:38px;
+  height:180px;
+  border-radius:18px;
+  border:1px solid rgba(0,0,0,.06);
+  box-shadow:
+    0 14px 26px rgba(0,0,0,.12),
+    inset 0 1px 0 rgba(255,255,255,.55);
+  transform:translateY(88px);
+  transition:transform .62s cubic-bezier(.2,.9,.2,1);
+  overflow:hidden;
+}
+.letterCard::after{
+  content:"";
+  position:absolute; inset:0;
+  background:rgba(255,77,109,.06);
+  pointer-events:none;
+}
+.envFlap{
+  position:absolute; left:0; right:0; bottom:104px;
+  height:120px;
+  transform-origin:center bottom;
+  transition:transform .52s cubic-bezier(.2,.9,.2,1);
+  filter:drop-shadow(0 10px 16px rgba(0,0,0,.10));
+}
+.envFlap::before{
+  content:"";
+  position:absolute; inset:0;
+  border-radius:18px;
+  background:linear-gradient(180deg, #fff, #f3f4f6);
+  clip-path:polygon(0 100%,50% 0,100% 100%);
+  border:1px solid rgba(0,0,0,.06);
+}
+.envelopeStage.open .envFlap{ transform:rotateX(160deg); }
+.envelopeStage.open .letterCard{ transform:translateY(-70px); }
+
+/* 10) Hang toggle gomb */
+.soundToggle{
+  position:fixed;
+  right:14px; top:14px;
+  z-index:10000;
+  border:0;
+  border-radius:999px;
+  padding:10px 12px;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 12px 22px rgba(0,0,0,.14);
+  background:rgba(255,255,255,.75);
+  backdrop-filter: blur(8px);
+}
+.soundToggle small{opacity:.7;font-weight:800}
+
+/* === TOAST POPUP === */
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:22px;
+  transform:translateX(-50%) translateY(20px);
+  z-index:10001;
+  background:rgba(255,255,255,.92);
+  border:1px solid rgba(0,0,0,.08);
+  border-radius:999px;
+  padding:12px 16px;
+  box-shadow:0 18px 35px rgba(0,0,0,.18);
+  font-weight:900;
+  opacity:0;
+  pointer-events:none;
+  backdrop-filter: blur(10px);
+  transition: opacity .18s ease, transform .18s ease;
+  max-width:min(92vw, 520px);
+  text-align:center;
+}
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+/* === ACHIEVEMENT OVERLAY === */
+.achievement{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.35);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:10002;
+}
+.achievementCard{
+  background:#fff;
+  border-radius:22px;
+  padding:22px 26px;
+  box-shadow:0 30px 60px rgba(0,0,0,.35);
+  text-align:center;
+  animation: achIn .35s ease;
+  max-width:min(92vw, 420px);
+  font-weight:900;
+}
+@keyframes achIn{
+  from{transform:scale(.7);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+/* === STAMP SLAM === */
+.stamp.slam{
+  animation: stampSlam .55s cubic-bezier(.2,1.4,.4,1) both;
+}
+@keyframes stampSlam{
+  0%{transform:translateY(-140px) scale(2.2) rotate(-18deg);opacity:0}
+  60%{transform:translateY(0) scale(.9) rotate(-6deg);opacity:1}
+  100%{transform:scale(1) rotate(-6deg)}
+}
+
+</style>
+</head>
+
+<body class="pulse">
+<div class="hearts" id="hearts"></div>
+
+<button class="soundToggle" id="soundToggle" title="Hang ki/be">
+  🔇 <small>HANG</small>
+</button>
+
+<div class="stage">
+  <div class="card anim-in" id="card"></div>
+</div>
+
+<button class="btn btn-soft" id="noBtn">NEM 🙃</button>
+
+<!-- Hangok (te teszed be a fájlokat) -->
+<audio id="sClick" src="sounds/click.mp3" preload="auto"></audio>
+<audio id="sSuccess" src="sounds/success.mp3" preload="auto"></audio>
+<audio id="sConfetti" src="sounds/confetti.mp3" preload="auto"></audio>
+
+<script>
+(() => {
+"use strict";
+
+/* =========================
+   MEDIA: IDE MÁSOLD A LINKJEID
+========================= */
+const MEDIA = {
+  startQ:   "https://media1.tenor.com/m/jvsVBSMabc4AAAAd/rose-cat-give-give-rose-to-cat.gif",
+  ezaz:     "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2ltNzVyNDZ5MjkyYnZ5eGZ6eG12ZW01eTVzYnpyeGh4djlvcGtldiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/RjVP4ZoxA3xeReLQT0/giphy.mp4",
+  wrong:    "https://media.tenor.com/aSkdq3IU0g0AAAPo/laughing-cat.mp4",
+  cyberWin: "https://media1.tenor.com/m/_dlfHbU0SAIAAAAd/cat.gif",
+  sadNo:    "https://media.tenor.com/aC4lUND6reYAAAPo/sullimvs-jinrinotes.mp4",
+
+  program_movie:      "https://media.tenor.com/FQAMXfDgTZwAAAPo/cat-black-cat.mp4",
+  program_chill:      "https://media.tenor.com/Ao9O4SGI-cQAAAPo/sleep-cat-two-cat.mp4",
+  program_restaurant: "https://media.tenor.com/Q3BHw-HC_MsAAAPo/restau-resto.mp4",
+  program_cyberjump:  "https://media.tenor.com/0QaXzNCexBoAAAPo/jumping-cats.mp4",
+
+  react_movie: "https://media.tenor.com/XfroIOEdb2gAAAAj/cat.gif",
+  react_chill: "https://media.tenor.com/vHbNwgMmg-oAAAPo/goth-goth-cat.mp4",
+
+  food_sushi:  "https://media1.tenor.com/m/mFm9nZf9veEAAAAd/hungry.gif",
+  food_pizza:  "https://media.tenor.com/2C4rlHRY6JoAAAAj/pizza-cat.gif",
+  food_burger: "https://media.tenor.com/TJqSOjbpM6kAAAPo/burger.mp4",
+  food_other:  "https://media.tenor.com/z40WAPqRtecAAAPo/winnie-the-pooh-hungry.mp4",
+
+  react_sushi:  "https://media.tenor.com/jTqX3aeYI8wAAAPo/orange-cat-sushi.mp4",
+  react_pizza:  "https://media1.tenor.com/m/PgSDIBe2xooAAAAd/can-we-get-pizza.gif",
+  react_burger: "https://media1.tenor.com/m/gZhZq92m84oAAAAd/funny-cheese-burger.gif",
+  react_other:  "https://media.tenor.com/HhutnYn8TTEAAAPo/dog-mlem.mp4",
+
+  finish: "https://media.tenor.com/IBxdvql1Mk0AAAPo/cat-kiss.mp4",
+};
+
+const PROGRAMS = [
+  { id:"movie",      label:"🎬 Mozi",        cardMedia: MEDIA.program_movie },
+  { id:"chill",      label:"🛋️ Otthon pihi", cardMedia: MEDIA.program_chill },
+  { id:"restaurant", label:"🍽️ Étterem",     cardMedia: MEDIA.program_restaurant },
+  { id:"cyberjump",  label:"🙏 Cyberjump",    cardMedia: MEDIA.program_cyberjump },
+];
+
+const FOODS = [
+  { id:"sushi",  label:"🍣 Sushi",      cardMedia: MEDIA.food_sushi,  reactMedia: MEDIA.react_sushi,  reactText:"Legyen akkor sushii! 🍣" },
+  { id:"pizza",  label:"🍕 Pizza",      cardMedia: MEDIA.food_pizza,  reactMedia: MEDIA.react_pizza,  reactText:"Pizzácskát akar az Edina? 🍕" },
+  { id:"burger", label:"🍔 Hamburger",  cardMedia: MEDIA.food_burger, reactMedia: MEDIA.react_burger, reactText:"Meki kell nekii! 🍔" },
+  { id:"other",  label:"❓ Mást",       cardMedia: MEDIA.food_other,  reactMedia: MEDIA.react_other,  reactText:"Engem? 😏" },
+];
+
+const card   = document.getElementById("card");
+const noBtn  = document.getElementById("noBtn");
+const hearts = document.getElementById("hearts");
+
+/* =========================
+   HANGOK (autoplay tiltás miatt)
+   - alapból némítva
+   - user kattint -> engedélyezhető
+========================= */
+const Sound = {
+  enabled: false,
+  els: {
+    click: document.getElementById("sClick"),
+    success: document.getElementById("sSuccess"),
+    confetti: document.getElementById("sConfetti"),
+  },
+  play(key){
+    if (!this.enabled) return;
+    const a = this.els[key];
+    if (!a) return;
+    try{
+      a.currentTime = 0;
+      const p = a.play();
+      if (p && typeof p.catch === "function") p.catch(()=>{});
+    }catch{}
+  }
+};
+
+const soundToggle = document.getElementById("soundToggle");
+function renderSoundBtn(){
+  soundToggle.innerHTML = Sound.enabled ? "🔊 <small>HANG</small>" : "🔇 <small>HANG</small>";
+}
+renderSoundBtn();
+
+soundToggle.addEventListener("click", (e)=>{
+  e.stopPropagation();
+  Sound.enabled = !Sound.enabled;
+  renderSoundBtn();
+  Sound.play("click");
+});
+
+/* =========================
+   MEDIA HELPERS + PRELOAD
+========================= */
+const mediaCache = new Map();
+const preloaded  = new Set();
+
+function isVideo(url){
+  const u = String(url || "").toLowerCase();
+  return u.endsWith(".mp4") || u.endsWith(".webm") || u.includes(".mp4?") || u.includes(".webm?");
+}
+function safeUrl(url){
+  const s = String(url || "").trim();
+  if (!s) return "";
+  if (/^\s*javascript:/i.test(s)) return "";
+  if (s === "PASTE_URL_HERE") return "";
+  return s;
+}
+function preloadOne(url){
+  url = safeUrl(url);
+  if (!url || preloaded.has(url)) return;
+  preloaded.add(url);
+
+  if (isVideo(url)){
+    const v = document.createElement("video");
+    v.preload = "auto";
+    v.muted = true;
+    v.playsInline = true;
+    v.src = url;
+    mediaCache.set(url, { type:"video", el:v });
+  } else {
+    const img = new Image();
+    img.decoding = "async";
+    img.src = url;
+    mediaCache.set(url, { type:"img", el:img });
+  }
+}
+function preloadKeys(keys){
+  for (const k of keys){
+    preloadOne(MEDIA[k]);
+  }
+}
+
+function mediaNode(url, {className="mediaHost"} = {}){
+  url = safeUrl(url);
+  if (!url){
+    const d = document.createElement("div");
+    d.className = className;
+    d.style.padding = "18px";
+    d.style.opacity = ".6";
+    d.style.fontWeight = "900";
+    d.textContent = "📎 Ide jön a giphy/tenor mp4 link";
+    return d;
+  }
+
+  if (isVideo(url)){
+    const v = document.createElement("video");
+    v.className = className;
+    v.autoplay = true;
+    v.loop = true;
+    v.muted = true;
+    v.playsInline = true;
+    v.preload = "auto";
+    v.src = url;
+    return v;
+  } else {
+    const img = document.createElement("img");
+    img.className = className;
+    img.loading = "eager";
+    img.decoding = "async";
+    img.alt = "";
+    img.src = url;
+    return img;
+  }
+}
+
+/* =========================
+   UI HELPERS
+========================= */
+function spawnHearts(count=22){
+  hearts.innerHTML="";
+  for(let i=0;i<count;i++){
+    const h=document.createElement("div");
+    h.className="heart";
+    const size=10+Math.random()*14;
+    h.style.setProperty("--s", size+"px");
+    h.style.left = Math.random()*100+"vw";
+    const dur = 7+Math.random()*7;
+    h.style.animationDuration = dur+"s";
+    h.style.animationDelay = (Math.random()*-dur)+"s";
+    hearts.appendChild(h);
+  }
+}
+spawnHearts();
+window.addEventListener("resize", () => spawnHearts());
+
+function escapeHtml(str){
+  return String(str)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function setCard(domBuilder){
+  card.classList.remove("anim-in");
+  card.classList.add("anim-out");
+  setTimeout(()=>{
+    card.innerHTML = "";
+    const frag = domBuilder();
+    card.appendChild(frag);
+    card.classList.remove("anim-out");
+    card.classList.add("anim-in");
+  },360);
+}
+
+/* 11) Polaroid random dőlés */
+function polaroidEl(url){
+  const wrap = document.createElement("div");
+  wrap.className = "polaroid";
+  const rot = (Math.random()*2-1)*2; // -2..+2 fok
+  wrap.style.transform = `rotate(${rot}deg)`;
+
+  wrap.innerHTML = `<div class="polaroidInner"></div>`;
+  wrap.querySelector(".polaroidInner").appendChild(mediaNode(url));
+  return wrap;
+}
+
+function buttonEl(text, classes, action){
+  const b = document.createElement("button");
+  b.className = `btn ${classes || ""}`.trim();
+  b.textContent = text;
+  if (action) b.dataset.a = action;
+  return b;
+}
+function h1El(text){ const h=document.createElement("h1"); h.textContent=text; return h; }
+function pEl(html){ const p=document.createElement("p"); p.innerHTML=html; return p; }
+
+/* 12) Heartbeat helper */
+function beat(){
+  card.classList.add("heartbeat");
+  setTimeout(()=>card.classList.remove("heartbeat"), 520);
+}
+
+/* 13) Szirmok */
+function petals(n=12){
+  for(let i=0;i<n;i++){
+    const p=document.createElement("div");
+    p.className="petal";
+    p.style.left = (Math.random()*100) + "vw";
+    p.style.animationDuration = (3.2 + Math.random()*1.8) + "s";
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(), 5000);
+  }
+}
+
+/* CONFETTI */
+function launchConfetti(){
+  Sound.play("confetti");
+  const count = 90;
+  for(let i=0;i<count;i++){
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.style.left = (Math.random()*100)+"vw";
+    c.style.animationDuration = (1.8 + Math.random()*1.6) + "s";
+    c.style.transform = `rotate(${Math.random()*360}deg)`;
+    c.style.background = `hsl(${Math.floor(Math.random()*360)} 90% 60%)`;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 4000);
+  }
+}
+
+
+/* === TOAST + ACHIEVEMENT HELPERS === */
+let toastTimer = 0;
+function toast(msg, ms=1500){
+  let t = document.getElementById("toast");
+  if (!t){
+    t = document.createElement("div");
+    t.id = "toast";
+    t.className = "toast";
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.classList.remove("show");
+  void t.offsetWidth;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove("show"), ms);
+}
+
+let achievementUnlocked = false;
+function showAchievement(){
+  const a = document.createElement("div");
+  a.className = "achievement";
+  a.innerHTML = `
+    <div class="achievementCard">
+      🏆 Achievement Unlocked<br>
+      Étterem • Péntek • 10/10 😏
+    </div>
+  `;
+  document.body.appendChild(a);
+  Sound.play("success");
+  setTimeout(()=>a.remove(), 2200);
+}
+
+/* =========================
+   14) Kurzor-szívek (finom)
+========================= */
+window.addEventListener("mousemove", (e)=>{
+  if (Math.random() > 0.92){
+    const h = document.createElement("div");
+    h.className = "cursor-heart";
+    h.style.left = e.clientX + "px";
+    h.style.top  = e.clientY + "px";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(), 650);
+  }
+});
+
+/* =========================
+   15) Parallax tilt (mouse + device)
+========================= */
+let tiltActive = true;
+let tiltX=0, tiltY=0;
+function applyTilt(){
+  if (!tiltActive) return;
+  card.style.transform = `rotateY(${tiltX}deg) rotateX(${tiltY}deg)`;
+}
+document.addEventListener("mousemove", (e)=>{
+  const x=(e.clientX/window.innerWidth - 0.5)*6;   // -3..+3
+  const y=(e.clientY/window.innerHeight - 0.5)*6;
+  tiltX = x;
+  tiltY = -y;
+  applyTilt();
+});
+window.addEventListener("deviceorientation", (e)=>{
+  // mobil: ha van szenzor, finoman használjuk
+  if (e.beta == null || e.gamma == null) return;
+  tiltX = Math.max(-4, Math.min(4, (e.gamma/45)*4));
+  tiltY = Math.max(-4, Math.min(4, (e.beta/45)*-4));
+  applyTilt();
+});
+
+/* =========================
+   16) Love mode easter egg (3 gyors tap)
+========================= */
+let tapCount = 0;
+let tapTimer = 0;
+card.addEventListener("click", ()=>{
+  tapCount++;
+  clearTimeout(tapTimer);
+  tapTimer = setTimeout(()=> tapCount = 0, 900);
+
+  if (tapCount === 3){
+    document.body.classList.add("loveMode");
+    setTimeout(()=>document.body.classList.remove("loveMode"), 1800);
+    tapCount = 0;
+  }
+});
+
+/* =========================
+   STATE
+========================= */
+let prankMode = true;
+let chosenProgram = "";
+let chosenMovie = "";
+let chosenFood = "";
+let chosenDateLabel = "";
+let chosenDateISO = "";
+let chosenTime = "";
+let excitement = 5;
+  achievementUnlocked = false;
+let pendingProgramId = null;
+
+/* =========================
+   NO BUTTON
+========================= */
+let noRaf = 0;
+let mouseX = 0, mouseY = 0;
+let cleanupNo = null;
+
+function enableNo(){
+  noBtn.style.display="inline-block";
+  noBtn.style.left="62vw";
+  noBtn.style.top="56vh";
+
+  let x=window.innerWidth*0.62;
+  let y=window.innerHeight*0.56;
+  let tx=x, ty=y;
+
+  function randomFar(cx,cy,minDist){
+    const w=noBtn.offsetWidth || 120;
+    const h=noBtn.offsetHeight || 44;
+    const pad=14;
+    for(let i=0;i<14;i++){
+      const rx=pad+Math.random()*(window.innerWidth-w-pad*2);
+      const ry=pad+Math.random()*(window.innerHeight-h-pad*2);
+      if(Math.hypot(rx-cx, ry-cy) >= minDist) return {x:rx,y:ry};
+    }
+    return {x: Math.min(window.innerWidth-w-pad, Math.max(pad, cx+200)),
+            y: Math.min(window.innerHeight-h-pad, Math.max(pad, cy+160))};
+  }
+
+  function jumpAway(cx,cy){
+    const spot = randomFar(cx,cy,260);
+    x = spot.x; y = spot.y;
+    noBtn.style.left=x+"px";
+    noBtn.style.top=y+"px";
+  }
+
+  const onMove = (e)=>{
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    tx=e.clientX+(Math.random()-0.5)*40;
+    ty=e.clientY+(Math.random()-0.5)*40;
+  };
+
+  const onEnter = (e)=>jumpAway(e.clientX,e.clientY);
+  const onClick = (e)=>{ e.preventDefault(); jumpAway(e.clientX,e.clientY); };
+
+  window.addEventListener("mousemove", onMove);
+  noBtn.addEventListener("pointerenter", onEnter);
+  noBtn.addEventListener("click", onClick);
+
+  function tick(){
+    x += (tx-x)*0.08;
+    y += (ty-y)*0.08;
+    noBtn.style.left = x+"px";
+    noBtn.style.top  = y+"px";
+
+    const r = noBtn.getBoundingClientRect();
+    if (mouseX >= r.left && mouseX <= r.right && mouseY >= r.top && mouseY <= r.bottom){
+      cleanup();
+      noCaughtSlide();
+      return;
+    }
+    noRaf = requestAnimationFrame(tick);
+  }
+
+  function cleanup(){
+    noBtn.style.display="none";
+    window.removeEventListener("mousemove", onMove);
+    noBtn.removeEventListener("pointerenter", onEnter);
+    noBtn.removeEventListener("click", onClick);
+    if (noRaf) cancelAnimationFrame(noRaf);
+  }
+
+  tick();
+  return cleanup;
+}
+
+function noCaughtSlide(){
+  setCard(() => {
+    const f = document.createDocumentFragment();
+    f.appendChild(h1El("Ténylek nem akarsz velem Valentin napozni? :("));
+    f.appendChild(polaroidEl(MEDIA.sadNo));
+    f.appendChild(buttonEl("Próbáld újra öcsi", "btn-primary btn-wide", "try-again-no"));
+    return f;
+  });
+}
+
+/* =========================
+   MODAL
+========================= */
+function openConfirmModal(programId){
+  pendingProgramId = programId;
+  const programLabel = PROGRAMS.find(p=>p.id===programId)?.label || programId;
+
+  const modal = document.createElement("div");
+  modal.className = "modal";
+  modal.innerHTML = `
+    <div class="modalCard">
+      <div class="modalTitle">Biztos ezt szeretnéd?</div>
+      <div class="modalText">Ezt választottad: <b>${escapeHtml(programLabel)}</b>. Biztos vagy benne? 😏</div>
+      <div class="modalRow">
+        <button class="btn btn-primary" data-a="confirm-yes">Igennn ✅</button>
+        <button class="btn btn-soft" data-a="confirm-hmm">Hmm…</button>
+      </div>
+    </div>
+  `;
+  card.appendChild(modal);
+}
+function closeModal(){
+  const m = card.querySelector(".modal");
+  if (m) m.remove();
+}
+
+/* =========================
+   SCREENS
+========================= */
+function envelopeScreen(){
+  if (cleanupNo) { cleanupNo(); cleanupNo=null; }
+
+  setCard(() => {
+    const f = document.createDocumentFragment();
+    const wrap = document.createElement("div");
+    wrap.className = "envWrap";
+    wrap.innerHTML = `
+      <div class="confidential">TITKOS</div>
+      <div class="envelopeStage" data-a="open-envelope" aria-label="Open envelope">
+        <div class="letterCard paper" aria-hidden="true"></div>
+        <div class="envFlap" aria-hidden="true"></div>
+        <div class="envPocket paper" aria-hidden="true"></div>
+      </div>
+      <div class="tapHint">Kattints a kinyitáshoz 💌</div>
+    `;
+    f.appendChild(wrap);
+    return f;
+  });
+}
+
+function startQuestion(){
+  prankMode = true;
+
+  chosenProgram = "";
+  chosenMovie = "";
+  chosenFood = "";
+  chosenDateLabel = "";
+  chosenDateISO = "";
+  chosenTime = "";
+  excitement = 5;
+  achievementUnlocked = false;
+
+  if (cleanupNo) cleanupNo();
+  cleanupNo = enableNo();
+
+  setCard(() => {
+    const f=document.createDocumentFragment();
+    f.appendChild(h1El("Szeretnéd velem tölteni a Valentin-napot? 💖"));
+    f.appendChild(polaroidEl(MEDIA.startQ));
+    const row = document.createElement("div");
+    row.className="row";
+    row.appendChild(buttonEl("IGEN 💕", "btn-primary btn-wide", "yes"));
+    f.appendChild(row);
+    return f;
+  });
+}
+
+function reactionSlide({title, text="", media, nextAction}){
+  setCard(() => {
+    const f=document.createDocumentFragment();
+    f.appendChild(h1El(title));
+    if (text) f.appendChild(pEl(text));
+    f.appendChild(polaroidEl(media));
+    f.appendChild(buttonEl("Next ➜", "btn-primary btn-wide", nextAction));
+    return f;
+  });
+}
+
+function yesReaction(){
+  if (cleanupNo) { cleanupNo(); cleanupNo=null; }
+  Sound.play("success");
+  petals(14);
+  setTimeout(() => {
+    preloadKeys([
+      "program_movie","program_chill","program_restaurant","program_cyberjump",
+      "react_movie","react_chill",
+      "food_sushi","food_pizza","food_burger","food_other",
+      "react_sushi","react_pizza","react_burger","react_other",
+      "cyberWin","finish"
+    ]);
+  }, 0);
+
+  reactionSlide({ title:"EZAZZZZ! 😍", media: MEDIA.ezaz, nextAction:"to-programs-prank" });
+}
+
+function programsScreen({real=false}){
+  const note = real
+    ? `<b>-Csak viccelek 😈</b> — most tényleg választhatsz.`
+    : `Okosan válassz 😈`;
+
+  setCard(() => {
+    const f=document.createDocumentFragment();
+    f.appendChild(h1El("Mit csináljunk? ✨"));
+    f.appendChild(pEl(note));
+
+    const grid = document.createElement("div");
+    grid.className="options";
+
+    for (const p of PROGRAMS){
+      const btn = document.createElement("button");
+      btn.className="opt";
+      btn.dataset.a="pick-program";
+      btn.dataset.id=p.id;
+
+      const thumb = document.createElement("div");
+      thumb.className="thumb";
+      thumb.appendChild(mediaNode(p.cardMedia, {className:""}));
+      btn.appendChild(thumb);
+
+      const s=document.createElement("span");
+      s.textContent=p.label;
+      btn.appendChild(s);
+
+      grid.appendChild(btn);
+    }
+
+    f.appendChild(grid);
+    return f;
+  });
+}
+
+function wrongChoice(){
+  setCard(() => {
+    const f=document.createDocumentFragment();
+    f.appendChild(h1El("❌ Rossz válasz"));
+    f.appendChild(polaroidEl(MEDIA.wrong));
+    f.appendChild(buttonEl("Próbáld újra öcsi 😈", "btn-primary btn-wide", "to-programs-prank"));
+    return f;
+  });
+}
+
+function cyberjumpWin(){
+  setCard(() => {
+    const f=document.createDocumentFragment();
+    f.appendChild(h1El("Tudtam hogy jól fogsz választani 😌"));
+    f.appendChild(polaroidEl(MEDIA.cyberWin));
+    const b = buttonEl("Next ➜", "btn-primary btn-wide", "cy-next");
+    b.id = "cyNext";
+    f.appendChild(b);
+    return f;
+  });
+
+  setTimeout(()=>{
+    const b = document.getElementById("cyNext");
+    if(!b) return;
+    const original = b.textContent;
+    b.addEventListener("mouseenter", ()=> b.textContent = "Csak viccelek 😈 most tényleg választhatsz.");
+    b.addEventListener("mouseleave", ()=> b.textContent = original);
+  },0);
+}
+
+function proceedRealProgram(programId){
+  const label = PROGRAMS.find(p=>p.id===programId)?.label || programId;
+  chosenProgram = label;
+
+  if (programId === "movie"){
+    toast("Avataaaar?");
+    return movieInput();
+  }
+  if (programId === "chill"){
+    toast("tudom mit akar az Edinaaa");
+    return chillReaction();
+  }
+  if (programId === "restaurant"){
+    toast("Ki gondolta volna? 😏");
+    return restaurantFoodChooser();
+  }
+  if (programId === "cyberjump") return cyberjumpRealReaction();
+
+  reactionSlide({ title:"Nice 😌", media: MEDIA.finish, nextAction:"date" });
+}
+
+function movieInput(){
+  setCard(() => {
+    const f=document.createDocumentFragment();
+    f.appendChild(h1El("Menjünk moziba! 🎬"));
+    f.appendChild(pEl("Mit szeretne nézni az Edina?"));
+
+    const input = document.createElement("input");
+    input.className="field";
+    input.id="movieTitle";
+    input.placeholder="Írd be a film címét...";
+    f.appendChild(input);
+
+    const row=document.createElement("div");
+    row.className="row";
+    row.appendChild(buttonEl("Next ➜", "btn-primary btn-wide", "confirm-movie"));
+    f.appendChild(row);
+
+    setTimeout(()=>input.focus(), 50);
+    return f;
+  });
+}
+
+function chillReaction(){
+  reactionSlide({
+    title:"Kuckózás 🛋️",
+    text:"Tudjuk mi lesz belőle.",
+    media: MEDIA.react_chill,
+    nextAction:"date"
+  });
+}
+
+function cyberjumpRealReaction(){
+  reactionSlide({
+    title:"MIII TÉNYLEG?! 😭",
+    text:"Ha tényleg ezt szeretné az Edina…",
+    media: MEDIA.cyberWin,
+    nextAction:"date"
+  });
+}
+
+/* FOOD */
+function restaurantFoodChooser(){
+  setCard(() => {
+    const f=document.createDocumentFragment();
+    f.appendChild(h1El("Akkor kajcsiii 🍽️"));
+    f.appendChild(pEl("Mit együnk? 😋"));
+
+    const grid=document.createElement("div");
+    grid.className="options";
+
+    for (const food of FOODS){
+      const btn=document.createElement("button");
+      btn.className="opt";
+      btn.dataset.a="pick-food";
+      btn.dataset.id=food.id;
+
+      const thumb=document.createElement("div");
+      thumb.className="thumb";
+      thumb.appendChild(mediaNode(food.cardMedia, {className:""}));
+      btn.appendChild(thumb);
+
+      const s=document.createElement("span");
+      s.textContent=food.label;
+      btn.appendChild(s);
+
+      grid.appendChild(btn);
+    }
+
+    const otherWrap=document.createElement("div");
+    otherWrap.id="otherWrap";
+    otherWrap.style.marginTop="12px";
+
+    f.appendChild(grid);
+    f.appendChild(otherWrap);
+    return f;
+  });
+}
+
+function showOtherFoodInput(){
+  const wrap = document.getElementById("otherWrap");
+  if (!wrap) return;
+  wrap.innerHTML = `
+    <input class="field" id="otherFood" placeholder="Írd be mit ennél…">
+    <div class="row">
+      <button class="btn btn-primary btn-wide" data-a="confirm-other-food">OK</button>
+    </div>
+  `;
+  setTimeout(()=>document.getElementById("otherFood")?.focus(), 50);
+}
+
+function foodReaction(foodId, customText=""){
+  const f = FOODS.find(x => x.id === foodId) || FOODS[0];
+  chosenFood = (foodId === "other" && customText.trim()) ? customText.trim() : f.label;
+
+  const title = (foodId === "other") ? `Jöjööö 😏` : f.reactText;
+  const text  = (foodId === "other") ? `Akkor ezt esszük: <b>${escapeHtml(chosenFood)}</b>` : "";
+
+  reactionSlide({ title, text, media: f.reactMedia, nextAction:"date" });
+}
+
+/* DATE */
+function dateScreen(){
+  setCard(() => {
+    const f=document.createDocumentFragment();
+    f.appendChild(h1El("Válassz egy napot! 💘"));
+    f.appendChild(pEl("Válassz ezek közül, vagy írj be egyet!"));
+
+    const grid=document.createElement("div");
+    grid.className="options";
+
+    const mk = (label, action, extra={})=>{
+      const b=document.createElement("button");
+      b.className="opt";
+      b.dataset.a=action;
+      Object.entries(extra).forEach(([k,v])=> b.dataset[k]=v );
+
+      const thumb=document.createElement("div");
+      thumb.className="thumb";
+      thumb.appendChild(mediaNode(MEDIA.ezaz, {className:""}));
+      b.appendChild(thumb);
+
+      const s=document.createElement("span");
+      s.textContent=label;
+      b.appendChild(s);
+
+      return b;
+    };
+
+    grid.appendChild(mk("Péntek",   "pick-date", {label:"Péntek"}));
+    grid.appendChild(mk("Szombat",  "pick-date", {label:"Szombat"}));
+    grid.appendChild(mk("Vasárnap", "pick-date", {label:"Vasárnap"}));
+    grid.appendChild(mk("Egyéb 📅", "custom-date"));
+
+    const customWrap=document.createElement("div");
+    customWrap.id="customWrap";
+    customWrap.style.marginTop="12px";
+
+    f.appendChild(grid);
+    f.appendChild(customWrap);
+    return f;
+  });
+}
+
+function showCustomDate(){
+  const wrap = document.getElementById("customWrap");
+  if (!wrap) return;
+  wrap.innerHTML = `
+    <div style="display:grid;gap:10px;">
+      <input class="field" id="dateISO" type="date">
+      <input class="field" id="timeISO" type="time">
+      <button class="btn btn-primary btn-wide" data-a="confirm-custom-date">Next ➜</button>
+    </div>
+  `;
+}
+
+/* SLIDER */
+window.__exSync = function(v){
+  const badge = document.getElementById("exBadge");
+  const msg = document.getElementById("exMsg");
+  const n = Number(v);
+
+  if (badge) badge.textContent = `${n}/10`;
+
+  const reactionText = (x)=>{
+    if (x <= 3) return "MIIIII?? 😭";
+    if (x <= 6) return "Ennyike 😌";
+    if (x <= 9) return "Húzzad még fentebb öcsi 😏";
+    return "BUUUUM!!! 🎉";
+  };
+  if (msg) msg.textContent = reactionText(n);
+};
+
+function excitementScreen(){
+  setCard(() => {
+    const f=document.createDocumentFragment();
+    f.appendChild(h1El("Mennyire várja már az Edina? 😍"));
+    f.appendChild(pEl("Húzd oda a csúszkát!"));
+
+    const box=document.createElement("div");
+    box.className="sliderBox";
+    box.innerHTML = `
+      <div class="sliderTop">
+        <div class="small">ennyire várom</div>
+        <div class="badge" id="exBadge">5/10</div>
+      </div>
+
+      <input id="ex" class="range" type="range" min="1" max="10" value="5"
+        oninput="__exSync(this.value)" onchange="__exSync(this.value)">
+      <div class="small" id="exMsg" style="margin-top:10px;font-weight:800;"></div>
+    `;
+    f.appendChild(box);
+
+    const row=document.createElement("div");
+    row.className="row";
+    row.appendChild(buttonEl("Next ➜", "btn-primary btn-wide", "after-slider"));
+    f.appendChild(row);
+
+    setTimeout(()=>window.__exSync(5), 0);
+    return f;
+  });
+}
+
+function afterSlider(){
+  const ex = document.getElementById("ex");
+  excitement = ex ? Number(ex.value) : excitement;
+
+  if (excitement === 10){
+    petals(18);
+    launchConfetti();
+  }
+
+  
+
+  // EASTER EGG: Étterem + Péntek + 10/10
+  if (
+    excitement === 10 &&
+    chosenProgram.includes("Étterem") &&
+    chosenDateLabel === "Péntek"
+  ){
+    achievementUnlocked = true;
+  }
+
+  reactionSlide({
+    title: excitement === 10 ? "10/10!!! 🎉" : "Ijjjjjjj 🫨🫨",
+    text: excitement === 10 ? "Pffffff 😏" : "Na majd teszek róla, hogy felmenjen 10/10-re 💖",
+    media: MEDIA.finish,
+    nextAction: "finish"
+  });
+}
+
+/* FINISH + RECEIPT */
+function finish(){
+  setCard(() => {
+    const f=document.createDocumentFragment();
+    f.appendChild(h1El("Kéééész 💖"));
+    f.appendChild(pEl("Kattints, hogy megkapd a nyugtát 😙"));
+    f.appendChild(polaroidEl(MEDIA.finish));
+    f.appendChild(buttonEl("Mutasd ➜", "btn-primary btn-wide", "receipt"));
+    return f;
+  });
+}
+
+function receipt(){
+  const dateLine = chosenDateISO
+    ? `${escapeHtml(chosenDateISO)}${chosenTime ? " " + escapeHtml(chosenTime) : ""}`
+    : escapeHtml(chosenDateLabel || "TBD");
+
+  const items = [];
+  items.push({k:"Valentin", v:"IGEN ✅"});
+  items.push({k:"Program", v: chosenProgram || "TBD"});
+  if (chosenMovie) items.push({k:"Film", v: chosenMovie});
+  if (chosenFood) items.push({k:"Kaja", v: chosenFood});
+  items.push({k:"Dátum", v: dateLine});
+  items.push({k:"Izgatottság", v: `${excitement}/10`});
+
+  setCard(() => {
+    const f=document.createDocumentFragment();
+    f.appendChild(h1El("🧾 Nyugta"));
+
+    const box=document.createElement("div");
+    box.className="receipt paper";
+
+    const order = Math.floor(100000 + Math.random()*900000);
+    box.innerHTML = `
+      <h2>VALENTIN NAP</h2>
+      <div class="smallReceipt">Rendelés #${order}</div>
+      <div class="smallReceipt">Status: elfogadva</div>
+      <div class="hr"></div>
+    `;
+
+    for (const it of items){
+      const line=document.createElement("div");
+      line.className="rline";
+      line.innerHTML = `<div>${escapeHtml(it.k)}</div><div>${escapeHtml(it.v)}</div>`;
+      box.appendChild(line);
+    }
+
+    box.insertAdjacentHTML("beforeend", `
+      <div class="hr"></div>
+      <div class="rline"><div><b>Összesen</b></div><div><b>∞</b></div></div>
+      ${achievementUnlocked ? '<div style="margin-top:10px;font-weight:900;">🏆 Achievement: Perfect Date</div>' : ''}
+      <div class="stamp slam"><span class="stampDot"></span>ELFOGADVA</div>
+    `);
+
+    if (achievementUnlocked){
+      setTimeout(()=>{
+        showAchievement();
+      }, 220);
+
+      setTimeout(()=>{
+        launchConfetti();
+        Sound.play("success");
+        if (navigator.vibrate) navigator.vibrate(120);
+      }, 420);
+    }
+
+    f.appendChild(box);
+
+    const row=document.createElement("div");
+    row.className="row";
+    row.appendChild(buttonEl("Újraindítás", "btn-primary btn-wide", "restart"));
+    f.appendChild(row);
+
+    return f;
+  });
+}
+
+/* =========================
+   EVENTS (delegálás)
+========================= */
+card.addEventListener("click", (e)=>{
+  const btn = e.target.closest("[data-a]");
+  if(!btn) return;
+
+  Sound.play("click");
+
+  const a = btn.dataset.a;
+
+  if (a === "open-envelope"){
+    const stage = card.querySelector(".envelopeStage");
+    if (stage) stage.classList.add("open");
+    setTimeout(() => startQuestion(), 720);
+    return;
+  }
+
+  if (a === "try-again-no") return startQuestion();
+
+  if (a === "yes"){
+    beat();
+    return yesReaction();
+  }
+
+  if (a === "to-programs-prank") return programsScreen({real:false});
+
+  if (a === "cy-next") { prankMode=false; return programsScreen({real:true}); }
+  if (a === "restart") return envelopeScreen();
+
+  if (a === "pick-program"){
+    const id = btn.dataset.id;
+
+    if (prankMode){
+      if (id === "cyberjump") return cyberjumpWin();
+      return wrongChoice();
+    }
+
+    openConfirmModal(id);
+    return;
+  }
+
+  if (a === "confirm-yes"){
+    closeModal();
+    if (pendingProgramId) proceedRealProgram(pendingProgramId);
+    pendingProgramId = null;
+    return;
+  }
+
+  if (a === "confirm-hmm"){
+    closeModal();
+    pendingProgramId = null;
+    return;
+  }
+
+  if (a === "confirm-movie"){
+    const title = document.getElementById("movieTitle")?.value || "";
+    if (!title.trim()){
+      const input = document.getElementById("movieTitle");
+      if (input) input.placeholder = "Írj be valamit 😄";
+      input?.focus();
+      return;
+    }
+    chosenMovie = title.trim();
+    Sound.play("success");
+    reactionSlide({
+      title: "Ennyike 🎬",
+      text: `Akkor ezt nézzük: <b>${escapeHtml(chosenMovie)}</b>`,
+      media: MEDIA.react_movie,
+      nextAction: "date"
+    });
+    return;
+  }
+
+  if (a === "pick-food"){
+    const id = btn.dataset.id;
+    if (id === "other") return showOtherFoodInput();
+    Sound.play("success");
+    return foodReaction(id);
+  }
+
+  if (a === "confirm-other-food"){
+    const val = document.getElementById("otherFood")?.value || "";
+    if (!val.trim()){
+      const wrap = document.getElementById("otherWrap");
+      if (wrap) wrap.insertAdjacentHTML("beforeend", `<p style="color:#b00020;margin-top:8px;">Írj be valamit 😄</p>`);
+      return;
+    }
+    Sound.play("success");
+    return foodReaction("other", val);
+  }
+
+  if (a === "date") return dateScreen();
+
+  if (a === "pick-date"){
+    chosenDateLabel = btn.dataset.label || "";
+    chosenDateISO = ""; chosenTime = "";
+    Sound.play("success");
+    return excitementScreen();
+  }
+
+  if (a === "custom-date") return showCustomDate();
+
+  if (a === "confirm-custom-date"){
+    const d = document.getElementById("dateISO")?.value || "";
+    const t = document.getElementById("timeISO")?.value || "";
+    if (!d){
+      const wrap = document.getElementById("customWrap");
+      if (wrap) wrap.insertAdjacentHTML("beforeend", `<p style="color:#b00020;margin-top:8px;">Válassz egy dátumot 😄</p>`);
+      return;
+    }
+    chosenDateISO = d;
+    chosenTime = t;
+    chosenDateLabel = "Custom";
+    Sound.play("success");
+    return excitementScreen();
+  }
+
+  if (a === "after-slider") return afterSlider();
+  if (a === "finish") return finish();
+  if (a === "receipt") return receipt();
+});
+
+/* =========================
+   INIT
+========================= */
+preloadKeys(["startQ","ezaz","sadNo","wrong"]); 
+	envelopeScreen();
+
+})();
+</script>
+</body>
+</html>
